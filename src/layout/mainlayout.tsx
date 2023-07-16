@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Header from "./layoutComponent/header";
-import { Outlet, useLocation, useOutlet } from "react-router-dom";
+import { useLocation, useOutlet } from "react-router-dom";
 import { useRef, useState } from "react";
 import Sidebar from "./layoutComponent/sidebar";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
