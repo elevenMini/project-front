@@ -1,36 +1,22 @@
-import { Route, Routes } from "react-router-dom";
 import GlobalStyle from "./style/globalstyle";
-import Layout from "./layout/layout";
-import { Main, Login, Register, Detail, Setting } from "./page";
-import SignIn from "./components/signin";
 
-function Nav() {
-  return (
-    <Routes>
-      {/* auth */}
-
-      <Route element={<Login />}>
-        <Route index element={<SignIn />} />
-        <Route path="/register" element={<Register />} />
-      </Route>
-      {/* yesAuth */}
-      <Route element={<></>}>
-        <Route path="/main" element={<Layout />}>
-          <Route index element={<Main />} />
-          <Route path="/main/:id" element={<Detail />} />
-          <Route path="/main/setting" element={<Setting />} />
-        </Route>
-      </Route>
-    </Routes>
-  );
-}
+import Nav from "./routes/route";
+import { Provider } from "react-redux";
+import { persistor, store } from "./store";
+import { PersistGate } from "redux-persist/integration/react";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 function App() {
+  const queryClient = new QueryClient();
   return (
-    <>
-      <GlobalStyle />
-      <Nav />
-    </>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <PersistGate persistor={persistor}>
+          <GlobalStyle />
+          <Nav />
+        </PersistGate>
+      </Provider>
+    </QueryClientProvider>
   );
 }
 
