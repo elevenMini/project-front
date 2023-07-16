@@ -1,7 +1,6 @@
-import SignIn from "@/components/signin";
-import Layout from "@/layout/layout";
-import { Login, Register, Main, Detail, Setting } from "@/page";
+import { Register, Main, Detail, Setting, SignIn } from "@/page";
 import { Routes, Route } from "react-router-dom";
+import { LoginLayout, MainLayout } from "@/layout";
 import NotAuthRoutes from "./authRoute";
 import ProtectedRoutes from "./protectRoute";
 import ErrorPage from "./404";
@@ -9,9 +8,9 @@ import ErrorPage from "./404";
 const Nav = () => {
   return (
     <Routes>
-      {/* auth */}
+      {/* NotAuth */}
       <Route element={<NotAuthRoutes user={false} />}>
-        <Route path="/" element={<Login />}>
+        <Route path="/" element={<LoginLayout />}>
           <Route index element={<SignIn />} />
           <Route path="/register" element={<Register />} />
         </Route>
@@ -20,7 +19,7 @@ const Nav = () => {
 
       {/* yesAuth */}
       <Route element={<ProtectedRoutes user={false} />}>
-        <Route path="/main" element={<Layout />}>
+        <Route path="/main" element={<MainLayout />}>
           <Route index element={<Main />} />
           <Route path="/main/:id" element={<Detail />} />
           <Route path="/main/setting" element={<Setting />} />
