@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   body {
-    color: #fff;
+    /* color: #fff; */
     font-family: Outfit, sans-serif;
     font-size: 16px;
     font-weight: 300;
@@ -29,11 +29,7 @@ const GlobalStyle = createGlobalStyle`
 
   a {
     text-decoration: none;
-    color: #fff;
-    transition: color 0.2s;
-    &:hover {
-      color: aqua;
-    }
+    color: #000;
   }
 
   button {

@@ -28,6 +28,12 @@ export const LoginContainer = styled.div`
       a {
         max-width: 120px;
         margin-bottom: 60px;
+        text-decoration: none;
+        color: #fff;
+        transition: color 0.2s;
+        &:hover {
+          color: aqua;
+        }
       }
       h1 {
         width: 100%;
