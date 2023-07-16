@@ -2,6 +2,7 @@ import { mail, key, hide, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Input, Button } from "@/util";
+import Icon from "@/util/icon";
 import { useState, FormEvent, useCallback } from "react";
 
 const Register = () => {
@@ -58,7 +59,7 @@ const Register = () => {
             이메일 *
           </label>
           <div className="inputForm">
-            <img className="icon-mail" src={mail} />
+            <Icon src={mail} alt="asd" className={"icon-mail"} />
             <Input
               icon={mail}
               id="email"
@@ -75,7 +76,7 @@ const Register = () => {
             비밀번호 *
           </label>
           <div className="inputForm">
-            <img className="icon-mail" src={key} />
+            <Icon src={key} alt="asd" className={"icon-mail"} />
             <Input
               className="input"
               backgroundColor={"#1a292e"}
@@ -103,7 +104,7 @@ const Register = () => {
             비밀번호 재확인 *
           </label>
           <div className="inputForm">
-            <img className="icon-mail" src={key} />
+            <Icon src={key} alt="asd" className={"icon-mail"} />
             <Input
               className="input"
               backgroundColor={"#1a292e"}

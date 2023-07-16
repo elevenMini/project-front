@@ -1,7 +1,10 @@
 import { hide, key, mail, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userSet } from "@/store/slice/userSlice";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Button, Input } from "@/util";
+import Icon from "@/util/icon";
 import { useState, FormEvent } from "react";
 import { Link } from "react-router-dom";
 
@@ -9,6 +12,16 @@ const SignIn = () => {
   const [emailValue, emailOnChange] = useInput();
   const [passwordValue, passwordOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
+  const dispatch = useAppDispatch();
+  const signinHandler = () => {
+    dispatch(
+      userSet({
+        id: emailValue,
+        nickname: "항해99",
+        token: "asdasaagagag.wweklaskdla.adlfslkfsaflsaf",
+      })
+    );
+  };
   const onViewHandler = () => {
     setOnview(!onView);
   };
@@ -28,7 +41,7 @@ const SignIn = () => {
             이메일 *
           </label>
           <div className="inputForm">
-            <img className="icon-mail" src={mail} />
+            <Icon src={mail} alt="asd" className={"icon-mail"} />
             <Input
               icon={mail}
               id="email"
@@ -45,7 +58,7 @@ const SignIn = () => {
             비밀번호 *
           </label>
           <div className="inputForm">
-            <img className="icon-mail" src={key} />
+            <Icon src={key} alt="asd" className={"icon-mail"} />
             <Input
               className="input"
               backgroundColor={"#1a292e"}
@@ -68,7 +81,13 @@ const SignIn = () => {
             )}
           </div>
         </div>
-        <Button color="custom" size="custom" title={<>로그인</>} type="submit" onClick={() => {}} />
+        <Button
+          color="custom"
+          size="custom"
+          title={<>로그인</>}
+          type="submit"
+          onClick={signinHandler}
+        />
       </form>
       <div className="sign-up-btn">
         <Link to={"/register"}>회원가입{">"}</Link>
