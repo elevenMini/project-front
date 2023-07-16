@@ -10,7 +10,7 @@ const Register = () => {
   const [passwordValue, passwordOnChange] = useInput();
   const [retryPasswordValue, retryOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
-  const [errorMessage, setErrorMessage] = useState("");
+  const [, setErrorMessage] = useState("");
 
   const validateEmail = (email: string) => {
     var re =
