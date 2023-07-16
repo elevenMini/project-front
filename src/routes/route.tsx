@@ -1,4 +1,4 @@
-import { Register, Main, Detail, Setting, SignIn } from "@/page";
+import { Register, Main, Detail, Setting, SignIn, Gallery, Board } from "@/page";
 import { Routes, Route } from "react-router-dom";
 import { LoginLayout, MainLayout } from "@/layout";
 import NotAuthRoutes from "./authRoute";
@@ -24,6 +24,8 @@ const Nav = () => {
         <Route path="/main" element={<MainLayout />}>
           <Route index element={<Main />} />
           <Route path="/main/:id" element={<Detail />} />
+          <Route path="/main/gallery" element={<Gallery />} />
+          <Route path="/main/board" element={<Board />} />
           <Route path="/main/setting" element={<Setting />} />
         </Route>
       </Route>

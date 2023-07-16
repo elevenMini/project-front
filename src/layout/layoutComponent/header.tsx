@@ -70,6 +70,12 @@ const HeaderContainer = styled.div`
     justify-content: center;
     gap: 20px;
   }
+  .btn-p {
+    font-size: 14px;
+    &:hover {
+      color: #000;
+    }
+  }
 `;
 export const Avatar = styled.div`
   max-width: 40px;
@@ -82,13 +88,26 @@ export const Avatar = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Header = () => {
+
+interface HeaderProps {
+  setSidebar: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Header: React.FC<HeaderProps> = (props) => {
+  const { setSidebar } = props;
   return (
     <HeaderContainer>
       <div className="header-wrraper">
         <div className="left-wrraper">
           <div className="icon-container">
-            <Icon src={menu} alt="asd" className={"icon"} />
+            <Icon
+              src={menu}
+              alt="asd"
+              className={"icon"}
+              onClick={() => {
+                setSidebar((prev) => !prev);
+              }}
+            />
           </div>
           <div className="logo">
             <a className="logo-tag">11조 프로젝트</a>
@@ -100,7 +119,7 @@ const Header = () => {
             <Icon src={setting} alt="asd" className={"icon"} />
           </div>
           <div className="addpicture-btn">
-            <Button color="custom" size="small" title={<>이미지업로드</>} />
+            <Button color="custom" size="small" title={<p className="btn-p">이미지업로드</p>} />
           </div>
           <Avatar>{/* <img src="" alt="asd" className="avatar" /> */}</Avatar>
         </div>

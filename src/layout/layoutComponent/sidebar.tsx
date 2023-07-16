@@ -39,6 +39,7 @@ const SidebarContainer = styled.aside`
 
   .linkSection,
   .otherSection {
+    gap: 10px;
     display: flex;
     .link-container {
       display: flex;
@@ -84,7 +85,7 @@ const Sidebar = () => {
     const pathStyle =
       location.pathname === path
         ? {
-            backgroundColor: "rgba(83, 171, 230,0.6)",
+            backgroundColor: "#ccc",
             borderLeftColor: "rgb(83, 171, 230)",
           }
         : {};
@@ -109,13 +110,13 @@ const Sidebar = () => {
                 <p className="link-name">홈</p>
               </div>
             </Link>
-            <Link to="/gallery">
+            <Link to="/main/gallery">
               <div className="link-container" style={linkColor("/gallery")}>
                 <Icon src={picture} alt="asd" className={"icon-link"} />
                 <p className="link-name">갤러리</p>
               </div>
             </Link>
-            <Link to="/board">
+            <Link to="/main/board">
               <div className="link-container" style={linkColor("/board")}>
                 <Icon src={board} alt="asd" className={"icon-link"} />
                 <p className="link-name">게시판</p>
@@ -123,7 +124,7 @@ const Sidebar = () => {
             </Link>
           </div>
           <div className="otherSection">
-            <Link to="/trash">
+            <Link to="/main/trash">
               <div className="link-container" style={linkColor("/trash")}>
                 <Icon src={trash} alt="asd" className={"icon-link"} />
                 <p className="link-name">휴지통</p>
