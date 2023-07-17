@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "./store";
 import { PersistGate } from "redux-persist/integration/react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { CookiesProvider } from "react-cookie";
 
 function App() {
   const queryClient = new QueryClient();
@@ -12,8 +13,10 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PersistGate persistor={persistor}>
-          <GlobalStyle />
-          <Nav />
+          <CookiesProvider>
+            <GlobalStyle />
+            <Nav />
+          </CookiesProvider>
         </PersistGate>
       </Provider>
     </QueryClientProvider>

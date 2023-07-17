@@ -1,4 +1,5 @@
 import { signin } from "@/api/post";
+import { getCookie } from "@/api/server";
 import { hide, key, mail, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
 import { useAppDispatch } from "@/hooks/useRedux";
@@ -33,6 +34,9 @@ const SignIn = () => {
       await signin({ username: emailValue, password: passwordValue })
         .then((res) => {
           console.log(res, " 성공");
+
+          const cookies = document.cookie;
+          console.log(cookies);
           dispatch(
             userSet({
               id: emailValue,

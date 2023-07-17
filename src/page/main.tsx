@@ -1,4 +1,7 @@
-import Carousel from "@/components/caroucel";
+import { getCookie } from "@/api/server";
+import Carousel from "@/components/home/caroucel";
+import Previewlist from "@/components/home/previewlist";
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const MainContainer = styled.div`
@@ -17,12 +20,19 @@ const WantedImg = [
   "https://static.wanted.co.kr/images/banners/1488/baa54448.jpg",
 ];
 const Main = () => {
+  useEffect(() => {
+    console.log(getCookie());
+    console.log(document.cookie);
+  }, []);
+
   return (
     <MainContainer>
       <Carousel images={WantedImg} />
       {/* 최근게시물 */}
       {/* 내 갤러리 5개 */}
-      {/* 내 게시물 5개 */}
+      <Previewlist />
+      {/* 전체 게시물 5개 */}
+      <Previewlist />
     </MainContainer>
   );
 };

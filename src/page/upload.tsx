@@ -61,6 +61,7 @@ const Upload = () => {
       console.error(error);
     }
   }, [title, content]);
+
   return (
     <UploadContainer>
       <div className="uploaddiv">

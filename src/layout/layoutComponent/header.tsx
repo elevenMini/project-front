@@ -5,8 +5,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderContainer = styled.div`
-  /* position: fixed; */
-  /* top: 0; */
+  position: sticky;
+  top: 0;
+  z-index: 100;
   width: 100%;
   height: 72px;
   background-color: #fff;

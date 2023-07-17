@@ -40,6 +40,7 @@ const Register = () => {
       // }
       if (passwordValue !== retryPasswordValue) {
         setErrorMessage("비밀번호가 같지않아요");
+        console.log(passwordValue, "==?", retryPasswordValue);
         return alert("비밀번호가 같지않아요");
       }
       if (!validatePassword(passwordValue)) {
@@ -131,7 +132,7 @@ const Register = () => {
               className="input"
               backgroundColor={"#1a292e"}
               icon={key}
-              id="password"
+              id="passwordretry"
               InputSize="custom"
               type={onView ? "text" : "password"}
               onChange={retryOnChange}
