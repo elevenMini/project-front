@@ -82,13 +82,12 @@ const Sidebar = () => {
   const location = useLocation();
 
   const linkColor = (path: string) => {
-    const pathStyle =
-      location.pathname === path
-        ? {
-            backgroundColor: "#ccc",
-            borderLeftColor: "rgb(83, 171, 230)",
-          }
-        : {};
+    const pathStyle = location.pathname.includes(path)
+      ? {
+          backgroundColor: "#ccc",
+          borderLeftColor: "rgb(83, 171, 230)",
+        }
+      : {};
     return pathStyle;
   };
 
@@ -110,13 +109,13 @@ const Sidebar = () => {
                 <p className="link-name">홈</p>
               </div>
             </Link>
-            <Link to="/main/gallery">
+            <Link to="/gallery">
               <div className="link-container" style={linkColor("/gallery")}>
                 <Icon src={picture} alt="asd" className={"icon-link"} />
                 <p className="link-name">갤러리</p>
               </div>
             </Link>
-            <Link to="/main/board">
+            <Link to="/board">
               <div className="link-container" style={linkColor("/board")}>
                 <Icon src={board} alt="asd" className={"icon-link"} />
                 <p className="link-name">게시판</p>
@@ -124,7 +123,7 @@ const Sidebar = () => {
             </Link>
           </div>
           <div className="otherSection">
-            <Link to="/main/trash">
+            <Link to="/trash">
               <div className="link-container" style={linkColor("/trash")}>
                 <Icon src={trash} alt="asd" className={"icon-link"} />
                 <p className="link-name">휴지통</p>

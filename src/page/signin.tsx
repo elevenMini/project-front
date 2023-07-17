@@ -1,3 +1,4 @@
+import { signin } from "@/api/post";
 import { hide, key, mail, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
 import { useAppDispatch } from "@/hooks/useRedux";
@@ -5,7 +6,7 @@ import { userSet } from "@/store/slice/userSlice";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Button, Input } from "@/util";
 import Icon from "@/util/icon";
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useCallback } from "react";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
@@ -13,24 +14,40 @@ const SignIn = () => {
   const [passwordValue, passwordOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
   const dispatch = useAppDispatch();
-  const signinHandler = () => {
-    dispatch(
-      userSet({
-        id: emailValue,
-        nickname: "항해99",
-        token: "asdasaagagag.wweklaskdla.adlfslkfsaflsaf",
-      })
-    );
-  };
+  // const signinHandler = () => {
+  //   dispatch(
+  //     userSet({
+  //       id: emailValue,
+  //       nickname: "항해99",
+  //       token: "asdasaagagag.wweklaskdla.adlfslkfsaflsaf",
+  //     })
+  //   );
+  // };
   const onViewHandler = () => {
     setOnview(!onView);
   };
-  const onSigninHandler = (e: FormEvent) => {
-    e.preventDefault();
-    alert("확인");
+  const onSigninHandler = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
 
-    // signin handeler api
-  };
+      await signin({ username: emailValue, password: passwordValue })
+        .then((res) => {
+          console.log(res, " 성공");
+          dispatch(
+            userSet({
+              id: emailValue,
+              nickname: "항해99",
+              token: "asdasaagagag.wweklaskdla.adlfslkfsaflsaf",
+            })
+          );
+          alert("로그인성공");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    [emailValue, passwordValue]
+  );
 
   const signContent = (
     <SignInContainer>
@@ -43,9 +60,10 @@ const SignIn = () => {
           <div className="inputForm">
             <Icon src={mail} alt="asd" className={"icon-mail"} />
             <Input
+              InputSize="custom"
               icon={mail}
               id="email"
-              color="black"
+              color="custom"
               // type="email"
               onChange={emailOnChange}
               value={emailValue}
@@ -60,11 +78,12 @@ const SignIn = () => {
           <div className="inputForm">
             <Icon src={key} alt="asd" className={"icon-mail"} />
             <Input
+              InputSize="custom"
               className="input"
               backgroundColor={"#1a292e"}
               icon={key}
               id="password"
-              color="black"
+              color="custom"
               type={onView ? "text" : "password"}
               onChange={passwordOnChange}
               value={passwordValue}
@@ -86,7 +105,7 @@ const SignIn = () => {
           size="custom"
           title={<>로그인</>}
           type="submit"
-          onClick={signinHandler}
+          // onClick={signinHandler}
         />
       </form>
       <div className="sign-up-btn">

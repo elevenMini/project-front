@@ -1,50 +1,68 @@
 import { ChangeEventHandler, HTMLInputTypeAttribute } from "react";
 import styled, { css } from "styled-components";
 
-interface MyInputProps {
-  InputSize?: "large" | "medium" | "small";
-  color?: string;
-  icon?: string;
+interface StyledInputProps {
+  InputSize: "large" | "medium" | "small" | "default" | "custom";
+  color: "black" | "white" | "default" | "custom";
   backgroundColor?: string;
 }
 
-const MyInput = styled.input<MyInputProps>`
-  ${(props) => {
-    switch (props.color) {
-      case "white":
-        return css`
-          color: #fff;
-          &::placeholder {
-            color: #fff;
-          }
-        `;
-      case "black":
-        return css`
-          color: #000;
-          &::placeholder {
-            color: #000;
-          }
-        `;
-      default:
-        return css`
-          color: #000;
-          &::placeholder {
-            color: #000;
-          }
-        `;
+export interface InputProps extends StyledInputProps {
+  onChange: ChangeEventHandler<HTMLInputElement>;
+  value: string;
+  type?: "default" | "price" | HTMLInputTypeAttribute | "password";
+  placeholder?: string;
+  id?: string;
+  icon?: string;
+  className?: string;
+}
+
+const sizeStyles = {
+  large: css``,
+  medium: css``,
+  small: css``,
+  default: css``,
+  custom: css``,
+};
+
+const colorStyles = {
+  black: css`
+    color: #000;
+    &::placeholder {
+      color: rgba(0, 0, 0, 0.2);
     }
-  }}
+    &:focus::placeholder {
+      color: rgba(0, 0, 0, 1);
+    }
+  `,
+  white: css`
+    color: #fff;
+    &::placeholder {
+      color: #fff;
+    }
+  `,
+  default: css`
+    color: #000;
+    &::placeholder {
+      color: #000;
+    }
+  `,
+  custom: css`
+    color: #fff;
+  `,
+};
+
+const MyInput = styled.input<StyledInputProps>`
   height: 50px;
   width: 100%;
   line-height: 1.42857;
-  color: #fff;
   border: none;
   outline: none;
-  /* border-radius: 10px; */
   margin-bottom: 0;
   background-color: transparent;
   vertical-align: middle;
   font-size: 16px;
+
   transition: border 0.2s;
 
   &::placeholder {
@@ -55,47 +73,36 @@ const MyInput = styled.input<MyInputProps>`
   &:focus::placeholder {
     color: rgba(255, 255, 255, 1);
   }
+
+  ${(props) => sizeStyles[props.InputSize || "default"]}
+  ${(props) => colorStyles[props.color || "default"]}
 `;
-interface InputProps {
-  onChange: ChangeEventHandler<HTMLInputElement>;
-  InputSize?: "large" | "medium" | "small";
-  value: string;
-  type?: "default" | "price" | HTMLInputTypeAttribute | "password";
-  placeholder?: string;
-  id?: string;
-  color: "black" | "white";
-  icon?: string;
-  backgroundColor?: string;
-  className?: string;
-}
+
 const Input: React.FC<InputProps> = (props) => {
   const {
-    color = "black",
+    color = "default",
     id,
-    icon,
+    backgroundColor,
     onChange,
-    InputSize = "medium",
+    InputSize = "default",
     value,
     type = "text",
     placeholder,
-    backgroundColor,
+
     className,
   } = props;
   return (
-    <>
-      <MyInput
-        backgroundColor={backgroundColor}
-        icon={icon}
-        id={id}
-        className={className}
-        color={color}
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
-        InputSize={InputSize}
-        value={value}
-      />
-    </>
+    <MyInput
+      id={id}
+      backgroundColor={backgroundColor}
+      className={className}
+      color={color}
+      type={type}
+      placeholder={placeholder}
+      onChange={onChange}
+      InputSize={InputSize}
+      value={value}
+    />
   );
 };
 export default Input;

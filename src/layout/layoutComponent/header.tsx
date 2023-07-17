@@ -1,6 +1,7 @@
 import { menu, setting } from "@/assets/icon/icons";
 import { Button } from "@/util";
 import Icon from "@/util/icon";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const HeaderContainer = styled.div`
@@ -95,6 +96,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (props) => {
   const { setSidebar } = props;
+  const navigate = useNavigate();
   return (
     <HeaderContainer>
       <div className="header-wrraper">
@@ -119,7 +121,12 @@ const Header: React.FC<HeaderProps> = (props) => {
             <Icon src={setting} alt="asd" className={"icon"} />
           </div>
           <div className="addpicture-btn">
-            <Button color="custom" size="small" title={<p className="btn-p">이미지업로드</p>} />
+            <Button
+              color="custom"
+              size="small"
+              title={<p className="btn-p">이미지업로드</p>}
+              onClick={() => navigate("/gallery/upload")}
+            />
           </div>
           <Avatar>{/* <img src="" alt="asd" className="avatar" /> */}</Avatar>
         </div>

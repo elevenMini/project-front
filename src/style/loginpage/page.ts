@@ -4,6 +4,7 @@ export const LoginContainer = styled.div`
   min-width: 100%;
   min-height: 100vh;
   display: flex;
+  color: #fff;
   .left-Wrraper {
     width: 50%;
     background-position: 50%;

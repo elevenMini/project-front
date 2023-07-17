@@ -1,9 +1,11 @@
+import { signup } from "@/api/post";
 import { mail, key, hide, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Input, Button } from "@/util";
 import Icon from "@/util/icon";
 import { useState, FormEvent, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [emailValue, emailOnChange] = useInput();
@@ -11,7 +13,7 @@ const Register = () => {
   const [retryPasswordValue, retryOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
   const [, setErrorMessage] = useState("");
-
+  const navigate = useNavigate();
   const validateEmail = (email: string) => {
     var re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -25,30 +27,47 @@ const Register = () => {
   const onViewHandler = () => {
     setOnview(!onView);
   };
-  const onSigninHandler = useCallback((e: FormEvent) => {
-    e.preventDefault();
-    if (!validateEmail(emailValue)) {
-      setErrorMessage("이메일 형식아님");
+  const onSigninHandler = useCallback(
+    async (e: FormEvent) => {
+      e.preventDefault();
+      // if (!validateEmail(emailValue)) {
+      //   setErrorMessage("이메일 형식아님");
 
-      return alert("이메일 형식아님");
-    }
-    if (passwordValue !== retryPasswordValue) {
-      setErrorMessage("비밀번호가 같지않아요");
-      return alert("비밀번호가 같지않아요");
-    }
-    if (!validatePassword(passwordValue)) {
-      setErrorMessage("특수문자 공백안되요");
-      return alert("특수문자 공백안되요");
-    }
+      //   return alert("이메일 형식아님");
+      // }
+      // if (emailValue.trim() === "" || passwordValue.trim() === "") {
+      //   return alert("빈칸을 채워주세요");
+      // }
+      if (passwordValue !== retryPasswordValue) {
+        setErrorMessage("비밀번호가 같지않아요");
+        return alert("비밀번호가 같지않아요");
+      }
+      if (!validatePassword(passwordValue)) {
+        setErrorMessage("특수문자 공백안되요");
+        return alert("특수문자 공백안되요");
+      }
 
-    alert(`    이메일 : ${emailValue}
-      비밀번호 : ${passwordValue}
-    `);
+      await signup({
+        username: emailValue,
+        password: passwordValue,
+      })
+        .then((res) => {
+          console.log(res);
+          alert("회원가입 완료");
+          navigate("/");
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("회원가입에 실패했습니다 다시시도해주세요");
+        })
+        .finally();
 
-    setErrorMessage("");
+      setErrorMessage("");
 
-    // api 호출이요
-  }, []);
+      // api 호출이요
+    },
+    [emailValue, passwordValue]
+  );
 
   const signContent = (
     <SignInContainer>
@@ -61,9 +80,10 @@ const Register = () => {
           <div className="inputForm">
             <Icon src={mail} alt="asd" className={"icon-mail"} />
             <Input
+              InputSize="custom"
               icon={mail}
               id="email"
-              color="black"
+              color="custom"
               // type="email"
               onChange={emailOnChange}
               value={emailValue}
@@ -82,7 +102,8 @@ const Register = () => {
               backgroundColor={"#1a292e"}
               icon={key}
               id="password"
-              color="black"
+              InputSize="custom"
+              color="custom"
               type={onView ? "text" : "password"}
               onChange={passwordOnChange}
               value={passwordValue}
@@ -106,11 +127,12 @@ const Register = () => {
           <div className="inputForm">
             <Icon src={key} alt="asd" className={"icon-mail"} />
             <Input
+              color="custom"
               className="input"
               backgroundColor={"#1a292e"}
               icon={key}
               id="password"
-              color="black"
+              InputSize="custom"
               type={onView ? "text" : "password"}
               onChange={retryOnChange}
               value={retryPasswordValue}

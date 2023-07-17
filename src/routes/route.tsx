@@ -1,4 +1,4 @@
-import { Register, Main, Detail, Setting, SignIn, Gallery, Board } from "@/page";
+import { Register, Main, Detail, Setting, SignIn, Gallery, Board, Upload } from "@/page";
 import { Routes, Route } from "react-router-dom";
 import { LoginLayout, MainLayout } from "@/layout";
 import NotAuthRoutes from "./authRoute";
@@ -21,12 +21,13 @@ const Nav = () => {
 
       {/* yesAuth */}
       <Route element={<ProtectedRoutes user={user} />}>
-        <Route path="/main" element={<MainLayout />}>
-          <Route index element={<Main />} />
-          <Route path="/main/:id" element={<Detail />} />
-          <Route path="/main/gallery" element={<Gallery />} />
-          <Route path="/main/board" element={<Board />} />
-          <Route path="/main/setting" element={<Setting />} />
+        <Route element={<MainLayout />}>
+          <Route path="/main" element={<Main />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/gallery/:id" element={<Detail />} />
+          <Route path="/board" element={<Board />} />
+          <Route path="/setting" element={<Setting />} />
+          <Route path="/gallery/upload" element={<Upload />} />
         </Route>
       </Route>
 

@@ -57,5 +57,8 @@ export const SignInContainer = styled.div`
     width: 100%;
     height: 100%;
     margin: 20px 0;
+    a {
+      color: #fff;
+    }
   }
 `;
