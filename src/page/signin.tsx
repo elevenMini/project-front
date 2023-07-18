@@ -8,6 +8,7 @@ import { SignInContainer } from "@/style/loginpage/signin";
 import { Button, Input } from "@/util";
 import Icon from "@/util/icon";
 import { useState, FormEvent, useCallback } from "react";
+import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
@@ -15,15 +16,6 @@ const SignIn = () => {
   const [passwordValue, passwordOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
   const dispatch = useAppDispatch();
-  // const signinHandler = () => {
-  //   dispatch(
-  //     userSet({
-  //       id: emailValue,
-  //       nickname: "항해99",
-  //       token: "asdasaagagag.wweklaskdla.adlfslkfsaflsaf",
-  //     })
-  //   );
-  // };
   const onViewHandler = () => {
     setOnview(!onView);
   };
@@ -34,21 +26,18 @@ const SignIn = () => {
       await signin({ username: emailValue, password: passwordValue })
         .then((res) => {
           console.log(res, " 성공");
-
-          const cookies = document.cookie;
-          console.log(cookies);
-          dispatch(
-            userSet({
-              id: emailValue,
-              nickname: "항해99",
-              token: "asdasaagagag.wweklaskdla.adlfslkfsaflsaf",
-            })
-          );
           alert("로그인성공");
         })
         .catch((err) => {
           console.log(err);
         });
+      dispatch(
+        userSet({
+          id: emailValue,
+          nickname: "항해99",
+          token: "일단비어있음",
+        })
+      );
     },
     [emailValue, passwordValue]
   );

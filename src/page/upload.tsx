@@ -12,24 +12,38 @@ const UploadContainer = styled.div`
   padding: 10px 15px;
   .uploaddiv {
     display: flex;
+    width: 100%;
+    height: 100%;
     gap: 20px;
   }
   .pictureContainer {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     flex-flow: 1;
     width: 100%;
-    height: 300px;
+    min-height: 500px;
     border: 1px dashed gray;
     border-radius: 10px;
+    /* background-color: #000; */
     img {
       width: 100%;
       height: 100%;
+      object-fit: contain;
+    }
+    .delbtn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin: 10px;
     }
   }
   .pictureContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     flex-flow: 1;
     width: 100%;
     height: 100%;
@@ -39,7 +53,8 @@ const UploadContainer = styled.div`
 const Upload = () => {
   const [title, onChangeTitleValue] = useInput();
   const [content, onChangeContentValue] = useInput();
-  const { inputRef, onUploadImage, onUploadImageButtonClick, previewImage } = useImageSelect();
+  const { inputRef, onUploadImage, onUploadImageButtonClick, previewImage, setPreviewImage } =
+    useImageSelect();
   const onUploadToServerButtonClick = useCallback(async () => {
     if (!inputRef.current?.files?.[0]) {
       return;
@@ -68,7 +83,17 @@ const Upload = () => {
         <div className="pictureContainer">
           <input type="file" ref={inputRef} onChange={onUploadImage} style={{ display: "none" }} />
           {previewImage ? (
-            <img src={previewImage} alt="asad" />
+            <>
+              <div className="delbtn">
+                <Button
+                  color="custom"
+                  title={<>삭제</>}
+                  size="small"
+                  onClick={() => setPreviewImage(null)}
+                />
+              </div>
+              <img src={previewImage} alt="asad" />
+            </>
           ) : (
             <>
               <p>이미지를 업로드해주세요</p>
@@ -82,6 +107,7 @@ const Upload = () => {
           )}
         </div>
         <div className="pictureContent">
+          <h1>이미지를 설명해주세요</h1>
           <Input
             color="black"
             value={title}

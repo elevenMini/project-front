@@ -3,15 +3,16 @@ import PreviewMockup from "./previewMockup";
 
 interface PreviewList {
   list?: [];
+  title: string;
 }
 
 const PreviewContainer = styled.div`
   position: relative;
-  margin-top: 20px;
+  margin-top: 10px;
   .preview-list {
     width: 100%;
     height: 100%;
-    padding-bottom: 120px;
+    padding-bottom: 60px;
     padding-top: 16px;
     .list-view-container {
       display: flex;
@@ -53,11 +54,11 @@ const ItemContainer = styled.div`
   }
 `;
 const Previewlist: React.FC<PreviewList> = (props) => {
-  const { list } = props;
+  const { list, title } = props;
 
   const content = (
     <PreviewContainer>
-      <div className="preview-logo">Hi there</div>
+      <div className="preview-logo">{title}</div>
       <div className="preview-list">
         <div className="list-view-container">
           {list ? (

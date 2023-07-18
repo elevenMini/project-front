@@ -1,14 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface UserState {
-  id: string;
-  nickname: string;
+  id: string | null;
+  nickname: string | null;
   token: string | null;
 }
 
 const initialState: UserState = {
-  id: "최은석",
-  nickname: "최은석",
+  id: null,
+  nickname: null,
   token: null,
 };
 
@@ -23,8 +23,8 @@ export const userSlice = createSlice({
       state.token = token;
     },
     userLogOut: (state) => {
-      state.id = "";
-      state.nickname = "";
+      state.id = null;
+      state.nickname = null;
       state.token = null;
     },
   },

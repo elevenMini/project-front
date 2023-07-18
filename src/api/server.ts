@@ -11,6 +11,8 @@ export const setCookie = (name: string, value: string, options?: any) => {
   return cookies.set(name, value, { ...options });
 };
 
-export const getCookie = () => {
-  return cookies.getAll({ doNotParse: true });
+export const getCookie = (name: string) => {
+  const value = "; " + document.cookie;
+  const parts = value.split("; " + name + "=");
+  if (parts.length === 2) return parts.pop().split(";").shift();
 };

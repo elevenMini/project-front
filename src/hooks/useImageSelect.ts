@@ -23,7 +23,7 @@ const useImageSelect = () => {
     inputRef.current.click();
   }, []);
 
-  return { inputRef, onUploadImage, onUploadImageButtonClick, previewImage };
+  return { inputRef, onUploadImage, onUploadImageButtonClick, previewImage, setPreviewImage };
 };
 
 export default useImageSelect;

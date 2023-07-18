@@ -10,6 +10,9 @@ const LayoutContainer = styled.div`
 `;
 const ContentLayout = styled.div`
   display: flex;
+  .outlet {
+    flex-grow: 1;
+  }
 `;
 
 const MainLayout = () => {
@@ -24,7 +27,9 @@ const MainLayout = () => {
         {sidebar && <Sidebar />}
         <SwitchTransition>
           <CSSTransition nodeRef={nodeRef} key={location.key} timeout={300} classNames="page">
-            <div ref={nodeRef}>{currentOutlet}</div>
+            <div className="outlet" ref={nodeRef}>
+              {currentOutlet}
+            </div>
           </CSSTransition>
         </SwitchTransition>
       </ContentLayout>

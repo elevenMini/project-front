@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
     opacity: 0;
     transform: scale(1.1);
   }
-
+  
   .page-enter-active {
     opacity: 1;
     transform: scale(1);

@@ -1,7 +1,7 @@
 import { server } from "./server";
 
 export const upload = async () => {
-  const response = await server.post("/api/boards", {});
+  const response = await server.post("/api/boards", {}, { withCredentials: true });
   return response;
 };
 
@@ -25,7 +25,6 @@ export const signup = async (params: signUpProp) => {
 };
 export const signin = async (params: signInProp) => {
   const { username, password } = params;
-  console.log(username, password);
   const response = await server.post("/api/user/login", {
     username: `${username}`,
     password: `${password}`,

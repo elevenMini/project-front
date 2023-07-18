@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-
+import { v4 as uuidv4 } from "uuid";
 interface PreviewList {
   list: [];
 }
@@ -13,22 +13,6 @@ const Skeleton = keyframes`
     100% {
       background-color: rgba(165, 165, 165, 0.3);
     }
-`;
-const PreviewContainer = styled.div`
-  position: relative;
-  .preview-list {
-    width: 100%;
-    height: 100%;
-    padding-bottom: 120px;
-    padding-top: 16px;
-    .list-view-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      height: 100%;
-      width: 100%;
-    }
-  }
 `;
 const ItemContainer = styled.div`
   width: 20%;
@@ -69,8 +53,8 @@ const ItemContainer = styled.div`
   }
 `;
 const PreviewMockup = () => {
-  const ItemContent = (
-    <ItemContainer>
+  const ItemContent = (key: string) => (
+    <ItemContainer key={key}>
       <div className="item-wrraper">
         <div className="item-img-container"></div>
         <div className="item-title-container">
@@ -80,6 +64,14 @@ const PreviewMockup = () => {
     </ItemContainer>
   );
 
-  return <>{[...Array(10)].map((e) => ItemContent)}</>;
+  return (
+    <>
+      {[...Array(5)]
+        .map((e) => {
+          return { key: uuidv4() };
+        })
+        .map((e) => ItemContent(e.key))}
+    </>
+  );
 };
 export default PreviewMockup;

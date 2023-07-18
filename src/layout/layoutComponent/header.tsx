@@ -1,4 +1,6 @@
 import { menu, setting } from "@/assets/icon/icons";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userSet } from "@/store/slice/userSlice";
 import { Button } from "@/util";
 import Icon from "@/util/icon";
 import { useNavigate } from "react-router-dom";
@@ -98,6 +100,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
   const { setSidebar } = props;
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   return (
     <HeaderContainer>
       <div className="header-wrraper">
@@ -129,7 +132,13 @@ const Header: React.FC<HeaderProps> = (props) => {
               onClick={() => navigate("/gallery/upload")}
             />
           </div>
-          <Avatar>{/* <img src="" alt="asd" className="avatar" /> */}</Avatar>
+          <Avatar
+            onClick={() => {
+              dispatch(userSet({ id: null, nickname: null, token: null }));
+            }}
+          >
+            {/* <img src="" alt="asd" className="avatar" /> */}
+          </Avatar>
         </div>
       </div>
     </HeaderContainer>
