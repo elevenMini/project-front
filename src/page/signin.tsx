@@ -26,18 +26,18 @@ const SignIn = () => {
       await signin({ username: emailValue, password: passwordValue })
         .then((res) => {
           console.log(res, " 성공");
+          dispatch(
+            userSet({
+              id: emailValue,
+              nickname: "항해99",
+              token: "일단비어있음",
+            })
+          );
           alert("로그인성공");
         })
         .catch((err) => {
           console.log(err);
         });
-      dispatch(
-        userSet({
-          id: emailValue,
-          nickname: "항해99",
-          token: "일단비어있음",
-        })
-      );
     },
     [emailValue, passwordValue]
   );
