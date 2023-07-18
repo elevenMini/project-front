@@ -70,6 +70,7 @@ const Upload = () => {
         headers: {
           "Content-Type": "multipart/form-data",
         },
+        withCredentials: true,
       });
       console.log(response.data);
     } catch (error) {

@@ -23,16 +23,16 @@ export const signup = async (params: signUpProp) => {
   });
   return response;
 };
-// export const signin = async (params: signInProp) => {
-//   const { username, password } = params;
-//   const response = await server.post(
-//     "/api/user/login",
-//     {
-//       username: `${username}`,
-//       password: `${password}`,
-//     },
-//     { timeout: 3000 }
-//   );
+export const signin = async (params: signInProp) => {
+  const { username, password } = params;
+  const response = await server.post(
+    "/api/user/login",
+    {
+      username: `${username}`,
+      password: `${password}`,
+    },
+    { withCredentials: true }
+  );
 
-//   return response;
-// };
+  return response;
+};

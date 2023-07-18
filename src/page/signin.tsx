@@ -1,3 +1,4 @@
+import { signin } from "@/api/post";
 import { server } from "@/api/server";
 import { hide, key, mail, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
@@ -15,26 +16,24 @@ const SignIn = () => {
   const [emailValue, emailOnChange] = useInput();
   const [passwordValue, passwordOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { data, error, isLoading, signin } = useSignin(server);
+
   const onViewHandler = () => {
     setOnview(!onView);
   };
   const onSigninHandler = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
-
-      try {
-        await signin(emailValue, passwordValue);
-        console.log(data, " 성공");
-        if (data.statusCode === 200) {
-          dispatch(userSet({ id: emailValue, nickname: passwordValue, token: "as" }));
-        }
-      } catch (err) {
-        console.log(error);
-      }
+      setIsLoading(true);
+      await signin({ password: passwordValue, username: emailValue })
+        .then(() => {
+          dispatch(userSet({ id: emailValue, nickname: passwordValue, token: "asd" }));
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoading(false));
     },
-    [emailValue, passwordValue, signin, data]
+    [emailValue, passwordValue]
   );
 
   const signContent = (
