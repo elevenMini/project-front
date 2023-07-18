@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from "axios";
+import axios, { AxiosInstance, CancelTokenSource } from "axios";
 import { Cookies } from "react-cookie";
 
 export const server: AxiosInstance = axios.create({

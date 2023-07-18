@@ -82,6 +82,9 @@ const colorStyles = {
 };
 
 const MyButton = styled.button<StyledButtonProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 8px;
   padding: 10px;
   font-size: 15px;

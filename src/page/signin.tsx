@@ -1,14 +1,14 @@
-import { signin } from "@/api/post";
-import { getCookie } from "@/api/server";
+import { server } from "@/api/server";
 import { hide, key, mail, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
 import { useAppDispatch } from "@/hooks/useRedux";
+import useSignin from "@/hooks/useSignIn";
 import { userSet } from "@/store/slice/userSlice";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Button, Input } from "@/util";
 import Icon from "@/util/icon";
+import Spinner from "@/util/spinner";
 import { useState, FormEvent, useCallback } from "react";
-import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
@@ -16,6 +16,7 @@ const SignIn = () => {
   const [passwordValue, passwordOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
   const dispatch = useAppDispatch();
+  const { data, error, isLoading, signin } = useSignin(server);
   const onViewHandler = () => {
     setOnview(!onView);
   };
@@ -23,23 +24,17 @@ const SignIn = () => {
     async (e: FormEvent) => {
       e.preventDefault();
 
-      await signin({ username: emailValue, password: passwordValue })
-        .then((res) => {
-          console.log(res, " 성공");
-          dispatch(
-            userSet({
-              id: emailValue,
-              nickname: "항해99",
-              token: "일단비어있음",
-            })
-          );
-          alert("로그인성공");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        await signin(emailValue, passwordValue);
+        console.log(data, " 성공");
+        if (data.statusCode === 200) {
+          dispatch(userSet({ id: emailValue, nickname: passwordValue, token: "as" }));
+        }
+      } catch (err) {
+        console.log(error);
+      }
     },
-    [emailValue, passwordValue]
+    [emailValue, passwordValue, signin, data]
   );
 
   const signContent = (
@@ -96,7 +91,13 @@ const SignIn = () => {
         <Button
           color="custom"
           size="custom"
-          title={<>로그인</>}
+          title={
+            isLoading ? (
+              <Spinner borderSize={4} color="#5585E8" size={20} spinColor="blue" />
+            ) : (
+              <>로그인</>
+            )
+          }
           type="submit"
           // onClick={signinHandler}
         />
