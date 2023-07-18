@@ -6,10 +6,11 @@ import Sidebar from "./layoutComponent/sidebar";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 const LayoutContainer = styled.div`
-  /* max-width: 1200px; */
+  height: 100%;
 `;
 const ContentLayout = styled.div`
   display: flex;
+  height: 100%;
   .outlet {
     flex-grow: 1;
   }

@@ -1,4 +1,10 @@
+import GetBoardList from "@/components/board/boardlist";
+
 const Board = () => {
-  return <div>Board</div>;
+  return (
+    <div>
+      <GetBoardList />
+    </div>
+  );
 };
 export default Board;

@@ -1,6 +1,7 @@
 import { getEveryGet, getUserGet } from "@/api/get";
 import GetGalleryList from "@/components/gallery/gallerylist";
 import { useEffect } from "react";
+import { useQuery } from "react-query";
 import styled from "styled-components";
 
 const GalleryContainer = styled.div`
@@ -9,10 +10,6 @@ const GalleryContainer = styled.div`
 `;
 
 const Gallery = () => {
-  useEffect(() => {
-    getUserGet().then((res) => console.log(res));
-    getEveryGet().then((res) => console.log(res));
-  }, []);
   return (
     <GalleryContainer>
       <GetGalleryList />
