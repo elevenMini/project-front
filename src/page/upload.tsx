@@ -69,6 +69,7 @@ const Upload = () => {
       const response = await server.post("/api/boards", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Cookie: document.cookie,
         },
       });
       console.log(response.data);
