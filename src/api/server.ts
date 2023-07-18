@@ -3,6 +3,7 @@ import { Cookies } from "react-cookie";
 
 export const server: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_SERVER_ENDPOINT,
+  withCredentials: true,
 });
 
 const cookies = new Cookies();
