@@ -68,7 +68,7 @@ const Register = () => {
 
       // api 호출이요
     },
-    [emailValue, passwordValue, passwordOnChange, retryOnChange]
+    [emailValue, passwordValue, retryPasswordValue]
   );
 
   const signContent = (
