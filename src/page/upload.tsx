@@ -2,7 +2,9 @@ import { server } from "@/api/server";
 import useImageSelect from "@/hooks/useImageSelect";
 import useInput from "@/hooks/useInput";
 import { Button, Input } from "@/util";
-import { useCallback } from "react";
+import Spinner from "@/util/spinner";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const UploadContainer = styled.div`
@@ -53,9 +55,12 @@ const UploadContainer = styled.div`
 const Upload = () => {
   const [title, onChangeTitleValue] = useInput();
   const [content, onChangeContentValue] = useInput();
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const { inputRef, onUploadImage, onUploadImageButtonClick, previewImage, setPreviewImage } =
     useImageSelect();
   const onUploadToServerButtonClick = useCallback(async () => {
+    setLoading(true);
     if (!inputRef.current?.files?.[0]) {
       return;
     }
@@ -65,17 +70,20 @@ const Upload = () => {
     formData.append("title", title);
     formData.append("content", content);
 
-    try {
-      const response = await server.post("/api/boards", formData, {
+    await server
+      .post("/api/boards", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
         withCredentials: true,
-      });
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
+      })
+      .then(() => {
+        navigate("/gallery");
+      })
+      .catch(() => {
+        alert("실패");
+      })
+      .finally(() => setLoading(false));
   }, [title, content]);
 
   return (
@@ -126,7 +134,15 @@ const Upload = () => {
           <Button
             color="custom"
             size="small"
-            title={<>업로드</>}
+            title={
+              <>
+                {loading ? (
+                  <Spinner borderSize={3} color="white" size={18} spinColor="gray" />
+                ) : (
+                  "업로드"
+                )}
+              </>
+            }
             onClick={onUploadToServerButtonClick}
           />
         </div>
