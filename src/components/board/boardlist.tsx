@@ -21,7 +21,6 @@ const GetGalleryListContainer = styled.div`
 
 const GetBoardList = () => {
   const { data, isError, isLoading, isFetching } = useQuery("getboard", getEveryGet);
-  console.log(data);
   const MockUpcontent = () =>
     [...Array(16)].map(() => {
       return <BoardListMockItem />;

@@ -4,6 +4,7 @@ import useInput from "@/hooks/useInput";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Input, Button } from "@/util";
 import Icon from "@/util/icon";
+import Spinner from "@/util/spinner";
 import { useState, FormEvent, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +13,7 @@ const Register = () => {
   const [passwordValue, passwordOnChange] = useInput();
   const [retryPasswordValue, retryOnChange] = useInput();
   const [onView, setOnview] = useState<boolean>();
+  const [signLoading, setSignLoading] = useState(false);
   const [, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const validateEmail = (email: string) => {
@@ -31,6 +33,7 @@ const Register = () => {
   const onSigninHandler = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();
+      setSignLoading(true);
       // if (!validateEmail(emailValue)) {
       //   setErrorMessage("이메일 형식아님");
 
@@ -62,7 +65,9 @@ const Register = () => {
           console.log(err);
           alert("회원가입에 실패했습니다 다시시도해주세요");
         })
-        .finally();
+        .finally(() => {
+          setSignLoading(false);
+        });
 
       setErrorMessage("");
 
@@ -151,7 +156,20 @@ const Register = () => {
             )}
           </div>
         </div>
-        <Button color="custom" size="custom" title={<>완료</>} type="submit" />
+        <Button
+          color="custom"
+          size="custom"
+          title={
+            <>
+              {signLoading ? (
+                <Spinner borderSize={3} color="white" size={18} spinColor="gray" />
+              ) : (
+                "완료"
+              )}
+            </>
+          }
+          type="submit"
+        />
       </form>
     </SignInContainer>
   );

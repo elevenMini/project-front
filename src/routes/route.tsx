@@ -20,6 +20,10 @@ const Nav = () => {
       </Route>
       <Route path={"/*"} element={<ErrorPage />} />
 
+      {/* 개인정보가 담긴 요청은 헤더 쿠키에 토큰이 담겨서 요청이되는데 만약에 시간이 지나서 쿠키에 토큰이 없으면
+      500에러를 반환하게 500에러를 반환하면 dispatch를 통해서 
+    */}
+
       {/* yesAuth */}
       <Route element={<ProtectedRoutes user={user} />}>
         <Route element={<MainLayout />}>

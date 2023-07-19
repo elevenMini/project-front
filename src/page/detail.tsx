@@ -97,11 +97,8 @@ const Detail = () => {
   const user = useAppSelector((state) => state.user.id);
   const {
     data: images,
-    isLoading,
     isSuccess,
     error,
-    isFetching,
-    isFetched,
   } = useQuery(["imageDetail", id], () => getDetailBoard(id), { keepPreviousData: true });
   const navigate = useNavigate();
   const [title, onChangeTitle, setTitle] = useInput();

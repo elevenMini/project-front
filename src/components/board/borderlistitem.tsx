@@ -1,6 +1,7 @@
 import { Avatar } from "@/layout/layoutComponent/header";
 import { ThemeProps } from "@/style/theme";
 import { DateTime, UsersBoard } from "@/types/response";
+import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 
 const ItemWrraper = styled.div<ThemeProps>`
@@ -86,7 +87,7 @@ const ItemBox = styled.div`
 
 const BoardListItem: React.FC<UsersBoard> = (props) => {
   const { uploadImage, title, username, createdAt } = props;
-
+  const navigate = useNavigate();
   const convertToJSDate = (dateTime: DateTime): Date => {
     const [year, month, day, hour, minute, second] = dateTime;
     return new Date(year, month - 1, day, hour + 9, minute, second, 0);
@@ -106,8 +107,9 @@ const BoardListItem: React.FC<UsersBoard> = (props) => {
     if (minutes > 0) return `${minutes}분 전`;
     return `${seconds}초 전`;
   };
-
-  console.log(createdAt);
+  const detailNavigateHandler = (Boardid: number) => {
+    navigate(`board/${Boardid}`);
+  };
   const Mockcontent = (
     <BoardItemContainer>
       <ItemContainer>

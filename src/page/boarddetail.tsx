@@ -1,4 +1,7 @@
+import { useParams } from "react-router-dom";
+
 const BoardDetail = () => {
-  return <div>BoardDetail</div>;
+  const { boardId } = useParams();
+  return <div>BoardDetail + {boardId}</div>;
 };
 export default BoardDetail;
