@@ -116,14 +116,12 @@ const Detail = () => {
     setDelLoading(true);
     await deleteBoard(`${images.id}`)
       .then((res) => {
-        console.log(res);
         if (res.data.statusCode === 200) {
           alert(res.data.responseMessage);
           navigate("/gallery");
         }
       })
       .catch((err) => {
-        console.log(err);
         alert("오류발생");
       })
       .finally(() => setDelLoading(false));

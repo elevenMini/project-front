@@ -7,7 +7,6 @@ const useSidebarClose = () => {
   useEffect(() => {
     const handleResize = _.debounce(() => {
       setWidth(window.innerWidth);
-      console.log("asdasd");
     }, 100);
 
     window.addEventListener("resize", handleResize);

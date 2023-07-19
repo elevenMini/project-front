@@ -19,7 +19,6 @@ const GetGalleryListContainer = styled.div`
 
 const GetGalleryList = () => {
   const { data, isError, isFetching } = useQuery<MyBoardList, Error>("gallery", getUserGet);
-  console.log(data);
   const MockUpcontent = () =>
     [...Array(16)]
       .map((e) => (e = { ...e, id: uuidv4() }))

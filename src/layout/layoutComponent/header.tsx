@@ -75,7 +75,7 @@ const HeaderContainer = styled.div`
     gap: 20px;
   }
   .btn-p {
-    font-size: 14px;
+    font-size: 12px;
     &:hover {
       color: #000;
     }

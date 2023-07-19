@@ -16,7 +16,6 @@ type signInProp = {
 
 export const signup = async (params: signUpProp) => {
   const { username, password } = params;
-  console.log(username, password);
   const response = await server.post("/api/user/signup", {
     username: `${username}`,
     password: `${password}`,

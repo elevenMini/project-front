@@ -36,7 +36,6 @@ export const useCustomInfiniteQuery = (
 
   useEffect(() => {
     if (queryResult.isFetchingNextPage) {
-      console.log("들어옴 ");
       const nextPage = (queryResult.data?.pageParams.reverse()[0] as number) ?? null;
       if (nextPage) {
         // queryClient.prefetchQuery(["dogsPost", nextPage + 2], () => getInfinityDogs(nextPage + 2));

@@ -29,7 +29,13 @@ const SignIn = () => {
         .then(() => {
           dispatch(userSet({ id: emailValue, nickname: passwordValue, token: "asd" }));
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          if (typeof err.response.data.message === "string") {
+            alert(`${err.response.data.message}`);
+          } else {
+            alert(`${err.response.data.message[0]}`);
+          }
+        })
         .finally(() => setIsLoading(false));
     },
     [emailValue, passwordValue]

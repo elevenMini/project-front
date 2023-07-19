@@ -34,17 +34,10 @@ const Register = () => {
     async (e: FormEvent) => {
       e.preventDefault();
       setSignLoading(true);
-      // if (!validateEmail(emailValue)) {
-      //   setErrorMessage("이메일 형식아님");
 
-      //   return alert("이메일 형식아님");
-      // }
-      // if (emailValue.trim() === "" || passwordValue.trim() === "") {
-      //   return alert("빈칸을 채워주세요");
-      // }
       if (passwordValue !== retryPasswordValue) {
         setErrorMessage("비밀번호가 같지않아요");
-        console.log(passwordValue, "==?", retryPasswordValue);
+        setSignLoading(false);
         return alert("비밀번호가 같지않아요");
       }
 
@@ -58,8 +51,11 @@ const Register = () => {
           navigate("/");
         })
         .catch((err) => {
-          console.log();
-          alert("회원가입에 실패했습니다 다시시도해주세요");
+          if (typeof err.response.data.message === "string") {
+            alert(`${err.response.data.message}`);
+          } else {
+            alert(`${err.response.data.message[0]}`);
+          }
         })
         .finally(() => {
           setSignLoading(false);
