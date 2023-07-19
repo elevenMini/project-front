@@ -47,10 +47,6 @@ const Register = () => {
         console.log(passwordValue, "==?", retryPasswordValue);
         return alert("비밀번호가 같지않아요");
       }
-      if (!validatePassword(passwordValue)) {
-        setErrorMessage("특수문자 공백안되요");
-        return alert("특수문자 공백안되요");
-      }
 
       await signup({
         username: emailValue,
@@ -62,7 +58,7 @@ const Register = () => {
           navigate("/");
         })
         .catch((err) => {
-          console.log(err);
+          console.log();
           alert("회원가입에 실패했습니다 다시시도해주세요");
         })
         .finally(() => {
