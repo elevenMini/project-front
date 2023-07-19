@@ -1,29 +1,5 @@
+import { CarouselWrapper, CarouselSlide, CarouselItem } from "@/style/main/home";
 import { useEffect, useRef } from "react";
-import styled from "styled-components";
-
-const CarouselWrapper = styled.div`
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-  margin: auto;
-  height: 35vh;
-`;
-
-const CarouselSlide = styled.div`
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-  will-change: transform;
-`;
-
-const CarouselItem = styled.div`
-  flex: 1 0 100%;
-  flex-basis: 50%;
-  max-width: 50%;
-  position: relative;
-  img {
-    object-fit: cover;
-  }
-`;
 
 interface CaroucelProp {
   images: string[];

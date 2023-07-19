@@ -1,9 +1,8 @@
 import styled from "styled-components";
 import GalleryListMockItem from "./gallerylistMockup";
-import { Suspense } from "react";
 import { useQuery } from "react-query";
 import { getUserGet } from "@/api/get";
-import { Board, MyBoardList } from "@/types/response";
+import { MyBoardList } from "@/types/response";
 import GalleryListItem from "./gallerylistItem";
 import { v4 as uuidv4 } from "uuid";
 const GetGalleryListContainer = styled.div`
@@ -18,7 +17,7 @@ const GetGalleryListContainer = styled.div`
 `;
 
 const GetGalleryList = () => {
-  const { data, isError, isFetching } = useQuery<MyBoardList, Error>("gallery", getUserGet);
+  const { data } = useQuery<MyBoardList, Error>("gallery", getUserGet);
   const MockUpcontent = () =>
     [...Array(16)]
       .map((e) => (e = { ...e, id: uuidv4() }))

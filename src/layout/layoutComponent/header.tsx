@@ -1,86 +1,12 @@
 import { menu, setting } from "@/assets/icon/icons";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { userSet } from "@/store/slice/userSlice";
+import { HeaderContainer } from "@/style/layoutstyle/layout";
 import { Button } from "@/util";
 import Icon from "@/util/icon";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
-const HeaderContainer = styled.div`
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  width: 100%;
-  height: 72px;
-  background-color: #fff;
-  box-shadow: 0px 2px 0px 0px rgba(0, 0, 0, 0.11);
-  padding: 0 20px;
-
-  .header-wrraper {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .left-wrraper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    a {
-      text-decoration: none;
-      color: #000;
-      cursor: pointer;
-      font-size: 1.2rem;
-      transition: color 0.2s;
-      &:hover {
-        color: aqua;
-      }
-    }
-  }
-  .center-wrraper {
-    flex-flow: 1;
-  }
-  .icon-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .logo-tag {
-      color: black;
-    }
-  }
-  .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: auto;
-    font-size: 15px;
-    padding: 12px;
-    border-radius: 5px;
-    background-color: #fff;
-    transition: background-color 0.2s;
-    font-weight: 500;
-    cursor: pointer;
-    &:hover {
-      background-color: #eee;
-    }
-  }
-  .right-wrraper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-  }
-  .btn-p {
-    font-size: 12px;
-    &:hover {
-      color: #000;
-    }
-  }
-`;
 export const Avatar = styled.div`
   max-width: 40px;
   width: 40px;

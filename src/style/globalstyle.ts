@@ -1,10 +1,12 @@
 import { createGlobalStyle } from "styled-components";
+import { ThemeProps } from "./theme";
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<ThemeProps>`
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
   }
   body {
     /* color: #fff; */

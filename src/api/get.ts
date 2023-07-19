@@ -12,6 +12,14 @@ export const getUserGet = async (): Promise<MyBoardList> => {
   const response = await server.get("/api/boards/user");
   return response.data;
 };
+export const getBoardTopFive = async (): Promise<MyBoardList> => {
+  const response = await server.get("/api/boards/top5");
+  return response.data;
+};
+export const getUserTopFive = async (): Promise<MyBoardList> => {
+  const response = await server.get("/api/boards/user/top5");
+  return response.data;
+};
 
 export const getDetailBoard = async (boardId: string): Promise<UserBoardDetails> => {
   const response = await server.get(`/api/boards/${boardId}`);

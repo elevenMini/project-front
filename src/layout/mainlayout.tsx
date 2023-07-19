@@ -1,23 +1,10 @@
-import styled from "styled-components";
 import Header from "./layoutComponent/header";
 import { useLocation, useOutlet } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import Sidebar from "./layoutComponent/sidebar";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import useSidebarClose from "@/hooks/useSidebarClose";
-
-const LayoutContainer = styled.div`
-  min-height: 100vh;
-  height: 100%;
-`;
-const ContentLayout = styled.div`
-  display: flex;
-  height: 100%;
-  min-height: calc(100vh - 72px);
-  .outlet {
-    flex-grow: 1;
-  }
-`;
+import { LayoutContainer, ContentLayout } from "@/style/layoutstyle/layout";
 
 const MainLayout = () => {
   const widowWidth = useSidebarClose();

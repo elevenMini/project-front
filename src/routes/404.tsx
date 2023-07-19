@@ -4,7 +4,8 @@ const ErrorPageContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  max-width: 100vw;
+  width: calc(100% - 260px);
   height: 100vh;
   background-color: #09171c;
   div {
