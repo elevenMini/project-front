@@ -22,12 +22,13 @@ interface Board {
 }
 
 interface UsersBoard {
-  id: string;
+  id: number;
   title: string;
   username: string;
+  content: string;
   createdAt: DateTime;
   modifiedAt: DateTime;
-  image: string;
+  uploadImage: UploadImage;
 }
 
 interface Comment {
@@ -60,6 +61,7 @@ type UsersBoardList = UsersBoard[];
 type UserBoardDetails = Post;
 
 export type {
+  DateTime,
   DelMyBoard,
   UploadImage,
   Board,

@@ -5,6 +5,7 @@ import NotAuthRoutes from "./authRoute";
 import ProtectedRoutes from "./protectRoute";
 import ErrorPage from "./404";
 import { useAppSelector } from "@/hooks/useRedux";
+import BoardDetail from "@/page/boarddetail";
 
 const Nav = () => {
   const user = useAppSelector((state) => Boolean(state.user.token));
@@ -26,6 +27,7 @@ const Nav = () => {
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/gallery/:id" element={<Detail />} />
           <Route path="/board" element={<Board />} />
+          <Route path="/board/:boardId" element={<BoardDetail />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/gallery/upload" element={<Upload />} />
         </Route>

@@ -86,7 +86,7 @@ export const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  background-color: beige;
+  background-color: gray;
   overflow: hidden;
   display: flex;
   align-items: center;
