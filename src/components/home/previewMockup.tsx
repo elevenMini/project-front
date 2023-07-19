@@ -1,3 +1,4 @@
+import { ThemeProps } from "@/style/theme";
 import styled, { keyframes } from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 interface PreviewList {
@@ -14,9 +15,15 @@ const Skeleton = keyframes`
       background-color: rgba(165, 165, 165, 0.3);
     }
 `;
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<ThemeProps>`
   width: 20%;
   padding: 5px;
+  @media ${(props) => props.theme.size.large} {
+    width: 25%;
+  }
+  @media ${(props) => props.theme.size.small} {
+    width: 33%;
+  }
   .item-wrraper {
     display: flex;
     flex-direction: column;

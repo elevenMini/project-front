@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import PreviewMockup from "./previewMockup";
+import { ThemeProps } from "@/style/theme";
 
 interface PreviewList {
   list?: [];
@@ -18,13 +19,17 @@ const PreviewContainer = styled.div`
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      height: 100%;
-      width: 100%;
     }
   }
 `;
-const ItemContainer = styled.div`
+const ItemContainer = styled.div<ThemeProps>`
   width: 20%;
+  @media ${(props) => props.theme.size.large} {
+    width: 25%;
+  }
+  @media ${(props) => props.theme.size.small} {
+    width: 33%;
+  }
   min-width: 200px;
   padding: 5px;
   .item-wrraper {
