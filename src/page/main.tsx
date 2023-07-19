@@ -1,5 +1,5 @@
 import { getCookie } from "@/api/server";
-import { eun, hyun, soon } from "@/assets/img";
+import { eleven, eun, hyun, soon } from "@/assets/img";
 import Carousel from "@/components/home/caroucel";
 import Previewlist from "@/components/home/previewlist";
 import { useEffect } from "react";
@@ -11,10 +11,12 @@ const MainContainer = styled.div`
   height: 100%;
   padding: 10px;
 `;
-const WantedImg = [eun, hyun, soon, "https://static.wanted.co.kr/images/banners/1468/3df61cbc.jpg"];
+const WantedImg = [eun, hyun, soon, eleven];
 const Main = () => {
   // 이미지 갤러리 , 보드 리스트 프리패치
+
   // use인피니티 쿼리 준비 일단은 get으로
+
   return (
     <MainContainer>
       <Carousel images={WantedImg} />

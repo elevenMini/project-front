@@ -1,12 +1,17 @@
 import styled from "styled-components";
 
-export const LoginContainer = styled.div`
+interface BackgroundProps {
+  background: string;
+}
+
+export const LoginContainer = styled.div<BackgroundProps>`
   min-width: 100%;
   min-height: 100vh;
   display: flex;
   color: #fff;
   .left-Wrraper {
     width: 50%;
+    background-image: url(${(props) => props.background});
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -15,7 +20,7 @@ export const LoginContainer = styled.div`
     display: flex;
     position: relative;
     .left-Wrraper-filter {
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(5px);
       background-color: rgba(9, 23, 28, 0.1);
       position: absolute;
       top: 0%;

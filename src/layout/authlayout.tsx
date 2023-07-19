@@ -1,3 +1,4 @@
+import { background } from "@/assets/img";
 import { LoginContainer } from "@/style/loginpage/page";
 import { useRef } from "react";
 import { useLocation, useOutlet } from "react-router-dom";
@@ -8,7 +9,7 @@ const LoginLayout = () => {
   const nodeRef = useRef(null);
   const currentOutlet = useOutlet();
   return (
-    <LoginContainer>
+    <LoginContainer background={background}>
       <div className="left-Wrraper">
         <div className="left-Wrraper-filter"></div>
         <div className="left-Wrraper-container">
