@@ -2,6 +2,19 @@ import styled from "styled-components";
 
 export const SignInContainer = styled.div`
   margin: 0 0 15px;
+  .h1Space {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    align-items: flex-start;
+    cursor: pointer;
+    p {
+      font-size: 14px;
+      &:hover {
+        color: #00e1db;
+      }
+    }
+  }
   .signin-h2 {
     margin-bottom: 30px;
     margin-top: 0;

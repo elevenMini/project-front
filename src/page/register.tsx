@@ -78,7 +78,10 @@ const Register = () => {
 
   const signContent = (
     <SignInContainer>
-      <h2 className="signin-h2">회원가입</h2>
+      <div className="h1Space">
+        <h2 className="signin-h2">회원가입</h2>
+        <p onClick={() => navigate(-1)}>뒤로가기</p>
+      </div>
       <form onSubmit={onSigninHandler} className="signin-form" autoComplete="off">
         <div className="signin-email-container">
           <label htmlFor="email" className="signin-label">

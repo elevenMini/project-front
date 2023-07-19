@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
 
   .page-enter {
     opacity: 0;
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   
   .page-enter-active {
