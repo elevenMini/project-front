@@ -1,5 +1,4 @@
 import { signin } from "@/api/post";
-import { server } from "@/api/server";
 import { hide, key, mail, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
 import { useAppDispatch } from "@/hooks/useRedux";

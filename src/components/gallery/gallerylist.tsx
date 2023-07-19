@@ -5,17 +5,15 @@ import { useQuery } from "react-query";
 import { getUserGet } from "@/api/get";
 import { Board, MyBoardList } from "@/types/response";
 import GalleryListItem from "./gallerylistItem";
-
+import { v4 as uuidv4 } from "uuid";
 const GetGalleryListContainer = styled.div`
-  width: 100%;
-  height: 100%;
   .listPostContainer {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-
-    width: 100%;
-    height: 100%;
+    /* justify-content: flex-start; */
+    align-items: stretch; // Add this
+    align-content: stretch; // Add this
   }
 `;
 
@@ -23,18 +21,16 @@ const GetGalleryList = () => {
   const { data, isError, isFetching } = useQuery<MyBoardList, Error>("gallery", getUserGet);
   console.log(data);
   const MockUpcontent = () =>
-    [...Array(16)].map(() => {
-      return <GalleryListMockItem />;
-    });
+    [...Array(16)]
+      .map((e) => (e = { ...e, id: uuidv4() }))
+      .map((e) => {
+        return <GalleryListMockItem key={e.id} />;
+      });
 
   return (
     <GetGalleryListContainer>
       <div className="listPostContainer">
-        {data && !isFetching ? (
-          data.map((item) => <GalleryListItem key={item.board_id} {...item} />)
-        ) : (
-          <MockUpcontent />
-        )}
+        {data ? data.map((item) => <GalleryListItem key={item.id} {...item} />) : <MockUpcontent />}
       </div>
     </GetGalleryListContainer>
   );

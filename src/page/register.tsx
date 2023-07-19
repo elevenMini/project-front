@@ -27,6 +27,7 @@ const Register = () => {
   const onViewHandler = () => {
     setOnview(!onView);
   };
+
   const onSigninHandler = useCallback(
     async (e: FormEvent) => {
       e.preventDefault();

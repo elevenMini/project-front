@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { getCookie, server } from "./server";
-import { Board, MyBoardList, UsersBoardList } from "@/types/response";
+import { Board, MyBoardList, UserBoardDetails, UsersBoardList } from "@/types/response";
 
 const token = getCookie("Authorization");
 
@@ -10,5 +10,10 @@ export const getEveryGet = async (): Promise<UsersBoardList> => {
 };
 export const getUserGet = async (): Promise<MyBoardList> => {
   const response = await server.get("/api/boards/user");
+  return response.data;
+};
+
+export const getDetailBoard = async (boardId: string): Promise<UserBoardDetails> => {
+  const response = await server.get(`/api/boards/${boardId}`);
   return response.data;
 };

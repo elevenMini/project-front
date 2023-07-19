@@ -10,3 +10,4 @@ export { default as setting } from "./setting.png";
 export { default as trash } from "./trash.png";
 export { default as rightarrow } from "./rightarrow.png";
 export { default as board } from "./board.png";
+export { default as close } from "./close.png";

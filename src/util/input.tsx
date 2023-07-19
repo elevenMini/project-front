@@ -5,21 +5,25 @@ interface StyledInputProps {
   InputSize: "large" | "medium" | "small" | "default" | "custom";
   color: "black" | "white" | "default" | "custom";
   backgroundColor?: string;
+  valueSize?: number;
 }
 
 export interface InputProps extends StyledInputProps {
-  onChange: ChangeEventHandler<HTMLInputElement>;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
   value: string;
   type?: "default" | "price" | HTMLInputTypeAttribute | "password";
   placeholder?: string;
   id?: string;
   icon?: string;
   className?: string;
+  disabled?: boolean;
 }
 
 const sizeStyles = {
   large: css``,
-  medium: css``,
+  medium: css`
+    padding: 10px;
+  `,
   small: css``,
   default: css``,
   custom: css``,
@@ -61,7 +65,7 @@ const MyInput = styled.input<StyledInputProps>`
   margin-bottom: 0;
   background-color: transparent;
   vertical-align: middle;
-  font-size: 16px;
+  font-size: ${(props) => props.valueSize}px;
 
   transition: border 0.2s;
 
@@ -84,8 +88,10 @@ const Input: React.FC<InputProps> = (props) => {
     id,
     backgroundColor,
     onChange,
+    valueSize,
     InputSize = "default",
     value,
+    disabled,
     type = "text",
     placeholder,
 
@@ -93,6 +99,7 @@ const Input: React.FC<InputProps> = (props) => {
   } = props;
   return (
     <MyInput
+      valueSize={valueSize}
       id={id}
       backgroundColor={backgroundColor}
       className={className}
@@ -102,6 +109,7 @@ const Input: React.FC<InputProps> = (props) => {
       onChange={onChange}
       InputSize={InputSize}
       value={value}
+      disabled={disabled}
     />
   );
 };
