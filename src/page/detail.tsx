@@ -2,8 +2,9 @@ import { deleteBoard, updateBoard } from "@/api/UpdateDelete";
 import { getDetailBoard } from "@/api/get";
 import { close } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
-import { useAppSelector } from "@/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import ErrorPage from "@/routes/404";
+import { userLogOut } from "@/store/slice/userSlice";
 import { DetailContainer } from "@/style/detail/detail";
 import { Button, Icon, Input } from "@/util";
 import Spinner from "@/util/spinner";
@@ -17,7 +18,7 @@ const Detail = () => {
   const {
     data: images,
     isSuccess,
-    error,
+    isError,
   } = useQuery(["imageDetail", id], () => getDetailBoard(id), { keepPreviousData: true });
 
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Detail = () => {
   const [updateFormToggle, setUpdateFormToggle] = useState<boolean>(false);
   const [delLoading, setDelLoading] = useState(false);
   const [updateLoading, setUpdateLoading] = useState(false);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (images) {
@@ -33,6 +35,10 @@ const Detail = () => {
       setContent(images.content);
     }
   }, [isSuccess]);
+
+  if (isError) {
+    dispatch(userLogOut());
+  }
 
   const deleteButtonHandler = async () => {
     setDelLoading(true);
@@ -59,6 +65,7 @@ const Detail = () => {
       .catch((err) => {
         alert("오류발생");
         console.log(err);
+        dispatch(userLogOut());
       })
       .finally(() => setUpdateLoading(false));
   };

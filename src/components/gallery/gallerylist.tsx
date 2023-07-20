@@ -5,6 +5,8 @@ import { getUserGet } from "@/api/get";
 import { MyBoardList } from "@/types/response";
 import GalleryListItem from "./gallerylistItem";
 import { v4 as uuidv4 } from "uuid";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userLogOut } from "@/store/slice/userSlice";
 const GetGalleryListContainer = styled.div`
   .listPostContainer {
     display: flex;
@@ -17,14 +19,17 @@ const GetGalleryListContainer = styled.div`
 `;
 
 const GetGalleryList = () => {
-  const { data } = useQuery<MyBoardList, Error>("gallery", getUserGet);
+  const { data, isError } = useQuery<MyBoardList, Error>("gallery", getUserGet);
+  const dispatch = useAppDispatch();
   const MockUpcontent = () =>
     [...Array(16)]
       .map((e) => (e = { ...e, id: uuidv4() }))
       .map((e) => {
         return <GalleryListMockItem key={e.id} />;
       });
-
+  if (isError) {
+    dispatch(userLogOut());
+  }
   return (
     <GetGalleryListContainer>
       <div className="listPostContainer">

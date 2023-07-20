@@ -1,4 +1,6 @@
 import { getDetailBoard } from "@/api/get";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userLogOut } from "@/store/slice/userSlice";
 import { BoardDetailContainer, ModalContainer } from "@/style/detail/boarddetail";
 import { Modal } from "@/util/modal";
 import { useState } from "react";
@@ -9,11 +11,18 @@ import styled from "styled-components";
 const BoardDetail = () => {
   const { boardId } = useParams();
 
-  const { data: board } = useQuery(["boardDetail", boardId], () => getDetailBoard(boardId), {
-    keepPreviousData: true,
-  });
+  const { data: board, isError } = useQuery(
+    ["boardDetail", boardId],
+    () => getDetailBoard(boardId),
+    {
+      keepPreviousData: true,
+    }
+  );
   const [modalToggle, setModalToggle] = useState(false);
-
+  const dispatch = useAppDispatch();
+  if (isError) {
+    dispatch(userLogOut());
+  }
   const mockcontent = (
     <>
       <div className="mock-title"></div>

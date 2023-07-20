@@ -2,6 +2,8 @@ import { getBoardTopFive, getUserTopFive } from "@/api/get";
 import { eleven, eun, hyun, soon } from "@/assets/img";
 import Carousel from "@/components/home/caroucel";
 import Previewlist from "@/components/home/previewlist";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userLogOut } from "@/store/slice/userSlice";
 import { useQuery } from "react-query";
 import styled from "styled-components";
 
@@ -27,6 +29,11 @@ const Main = () => {
     isFetching: UserTopfiveIsFetching,
   } = useQuery("getuserTopFive", getUserTopFive);
 
+  const dispatch = useAppDispatch();
+
+  if (UserTopfiveError || BoardTopfiveError) {
+    dispatch(userLogOut());
+  }
   return (
     <MainContainer>
       <Carousel images={WantedImg} />

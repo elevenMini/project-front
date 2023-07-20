@@ -4,9 +4,12 @@ import { getEveryGet } from "@/api/get";
 import BoardListMockItem from "./boardlistMockup";
 import BoardListItem from "./borderlistitem";
 import { GetGalleryListContainer } from "@/style/board/board";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userLogOut } from "@/store/slice/userSlice";
 
 const GetBoardList = () => {
-  const { data } = useQuery("getboard", getEveryGet);
+  const { data, isError } = useQuery("getboard", getEveryGet);
+  const dispatch = useAppDispatch();
   const MockUpcontent = () =>
     [...Array(16)]
       .map((e) => {
@@ -15,7 +18,9 @@ const GetBoardList = () => {
       .map((e) => {
         return <BoardListMockItem key={e.key} />;
       });
-
+  if (isError) {
+    dispatch(userLogOut());
+  }
   return (
     <GetGalleryListContainer>
       <div className="listPostContainer">

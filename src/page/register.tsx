@@ -1,6 +1,8 @@
 import { signup } from "@/api/post";
 import { mail, key, hide, view } from "@/assets/icon/icons";
 import useInput from "@/hooks/useInput";
+import { useAppDispatch } from "@/hooks/useRedux";
+import { userLogOut } from "@/store/slice/userSlice";
 import { SignInContainer } from "@/style/loginpage/signin";
 import { Input, Button } from "@/util";
 import Icon from "@/util/icon";

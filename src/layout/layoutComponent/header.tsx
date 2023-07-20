@@ -1,6 +1,6 @@
 import { menu, setting } from "@/assets/icon/icons";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
-import { userSet } from "@/store/slice/userSlice";
+import { userLogOut, userSet } from "@/store/slice/userSlice";
 import { HeaderContainer } from "@/style/layoutstyle/layout";
 import { Button } from "@/util";
 import Icon from "@/util/icon";
@@ -65,7 +65,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           </div>
           <Avatar
             onClick={() => {
-              dispatch(userSet({ id: null, nickname: null, token: null }));
+              dispatch(userLogOut());
             }}
           >
             <p>{user.split("@")[1].charAt(0)}</p>
