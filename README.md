@@ -1,71 +1,89 @@
 # 11조 프로젝트
 
-`HTTP` VS `HTTPS`
+- [11조 프로젝트](#11조-프로젝트)
+  - [Frontend 이슈](#frontend-이슈)
+    - [JWT (JSON Web Tokens) 토큰 처리 문제](#jwt-json-web-tokens-토큰-처리-문제)
+    - [트러블 슈팅 - 해결방안](#트러블-슈팅---해결방안)
+  - [아쉬운점 \& 개선점](#아쉬운점--개선점)
+  - [만약 되돌아간다면](#만약-되돌아간다면)
 
-HTTP 프로토콜의 문제점은 서버에서부터 브라우저로 전송되는 정보가 암호화되지 않는다는 것
-즉, 데이터가 쉽게 도난당할 수 있다는 것
+## Frontend 이슈
 
-HTTPS 프로토콜은 SSL(보안 소켓 계층)을 사용함으로써 이 문제를 해결
+### JWT (JSON Web Tokens) 토큰 처리 문제
 
-SSL은 서버와 브라우저 사이에 안전하게 암호화된 연결을 만들 수 있게 도와주고,
-서버 브라우저가 민감한 정보를 주고받을 때 이것이 도난당하는 것을 막아줍니다.
+JWT는 사용자 인증을 위해 사용하는 토큰입니다. 사용자가 로그인을 하면, 이 JWT 토큰은 네트워크 탭의 set-cookie에 나타납니다.
+![네트워크탭](https://user-images.githubusercontent.com/85878391/254797800-e87c1d2e-ae81-402d-9234-c3794ef94780.png)
+로그인 이후 서버로부터 토큰을 정상적으로 받아오는 것까지 확인했지만, 이 토큰을 프론트에서 가져와서 HTTP 헤더에 붙여넣는 것에 어려움이 있었습니다.
 
-HTTPS는 TLS(전송 계층 보안) 프로토콜을 통해서도 보안을 유지.
-TSL은 데이터 무결성을 제공하기 때문에 데이터가 전송 중에 수정되거나 손상되는 것을 방지하고,
-사용자가 자신이 의도하는 웹사이트와 통신하고 있음을 입증하는 인증 기능도 제공하고 있습니다.
+- 문제의 원인은 브라우저의 보안 업데이트로 인한 쿠키의 `SameSite` 속성의 변경 때문이었습니다. 이 때문에 저희 팀은 각자 조사한 결과 다음의 방법들을 고려하게 되었습니다
 
-사실 HTTPS로 전환하게 되면 검색엔진 최적화(SEO)에 있어서도 큰 혜택을 볼 수 있는데요.
-AMP(Accelerated Mobile Pages)를 사용할 때도 HTTPS 프로토콜이 사용되어야 한다.
+  - **방안 1.** `SameSite` 속성을 `None`으로 설정하고, `Secure` 속성을 `true`로 설정하기 (HTTPS 필요)
+  - **방안 2.** 모든 요청을 GET 요청으로 변경하기 (`Lax` 속성)
+  - **방안 3.** 동일한 도메인에서 배포하기 (route53)
+  - **방안 4.** 응답 바디에 토큰을 넣어 프론트에서 직접 토큰을 핸들링하기
+  - **방안 5.** nginx를 이용하여 리버스 프록시 설정하기
+  - **방안 6.** Docker 활용하기
 
-=========================================================================
-HTTPS 프로토콜 사용에 있어서 발생한 이슈
+### 트러블 슈팅 - 해결방안
 
-- DNS 서비스 이용에 대한 개념 (ROUTE 53)
+토큰 문제를 해결하기 위해 CORS (Cross-Origin Resource Sharing) 설정과 `SameSite` 속성을 조정하였습니다.
 
-- 인증기관의 선택 (AWS의 서비스인 ACM, CERTBOT)
+1. **CORS 설정**
 
-  > ACM 사용을 원했으나, 승인 기간이 오래걸림
-  > CERTBOT을 사용하여 공개키 발생을 선택(SSL)
+   서버에서는 허용되는 출처를 명시적으로 설정하고, 쿠키를 포함한 요청을 허용하기 위해 `allowCredentials`를 `true`로 설정하였습니다.
 
-- 도메인 구매를 하지 않고 DNS주소로 요청 >> 일반적으로 주어지는 EC2의 변경가능한 DNS 주소를 줘서 인증 오류
+   ```tsx
+   export const server: AxiosInstance = axios.create({
+     baseURL: import.meta.env.VITE_SERVER_ENDPOINT,
+     withCredentials: true, // 요청에 쿠키담기
+   });
+   ```
 
-  > DNS 주소를 구매를 하고, ROUTE 53에 해당 도메인 주소를 EC2 IP에 연결
+   - 스프링부트에서 CORS 설정
+   - 백엔드에서는 CORS 설정을 변경하여 프론트엔드에서 보낸 쿠키를 수락할 수 있게 해야 함
 
-- SSL 인증서 발급 받는 방법 중, standalone 방법을 사용해서 진행. 이 경우에는 certbot이 해당 서버를 인증하는 과정에서
-  80번 포트를 사용해야하기 때문에, 80번 포트를 통해 이용하는 application이 없어야했다.
-  하지만 우리는 무중단 배포를 하고 있어서 서버를 내리고 다시 시작하는 과정에서 어려움을 겪음.
+   ```java
+   @Override
+   public void addCorsMappings(CorsRegistry registry) {
+      registry.addMapping("/api/**")
+              .allowedOrigins(ALLOWED_ORIGINS.toArray(new String[0]))
+              // 프론트도메인 // * 는 브라우저에서 위험으로 판단하여 다막아버림
+              .allowedMethods("*")
+              .allowCredentials(true)
+              .maxAge(3000);
+   }
+   ```
 
-=========================================================================
+2. **`SameSite` 속성 조정**
+   ![네트워크탭2](https://user-images.githubusercontent.com/85878391/254797810-58b73b91-fa49-482d-a81b-8b2e60510730.png)
+   크롬 버전 80 이후로 쿠키의 `SameSite` 속성은 기본적으로 `Lax`로 설정되어 있어, 이를 `None`으로 설정하였습니다. `None` 설정을 위해서는 `Secure` 속성이 `true`로 설정되어야 하며, HTTPS을 적용해야했습니다.
 
-CICD 구축에 있어서 아쉬운 점
+   ```jsx
+   import javax.servlet.http.Cookie;
+   import javax.servlet.http.HttpServletResponse;
 
-사용 툴 - Github Actions - AWS CodeDeploy - S3 - EC2 - RDS
+   public void createCookie(HttpServletResponse response) {
+       Cookie cookie = new Cookie("cookieName", "cookieValue");
+       cookie.setPath("/");
+       cookie.setHttpOnly(true); // 프론트에서 확인 불가. XSS 공격에 방어력 +1
+       cookie.setSecure(true);  // SameSite=None 설정을 사용하려면 Secure도 true로 설정해야 함.
+       cookie.setAttribute("SameSite", "None");
 
-전반적인 내용
-YOUTUBE와 다양한 레버런스를 통해 CICD 구축하는 과정은 어렵지 않음.
+   		res.addCookie(cookie); // SameSite=None 추가
+   }
+   ```
 
-아쉬운점
-IAM 사용자 등록 / 역할 부여하는 과정에서 어려움을 겪음.
-이 부분은 항해 강의와 다양한 레퍼런스를 통해 보완해야 함.
+   이처럼 브라우저에서 나는 에러들도 백엔드분들과 협력하여 더욱 다양한 시선에서 바라볼수 있어 좋았고, 해결역시 빠르게 해결되어 잘 마무리되었습니다.
 
-IAM
+## 아쉬운점 & 개선점
 
-1. ROOT(회사 계정)
-2. 사용자를 만든다.(사원 계정)  
-   역할<권한>
-3. 해당 IAM 계정을 받은 사람이 접속해서 비밀번호를 알아서 바꿈
+1. 이미지를많이 업로드하는만큼 이미지의 크기를 줄이고 업로드를 하는 로직을 추가 **서버 부담 감소 및 브라우저 로딩감소**
+2. 이미지를 많이 불러오는 만큼 이미지가 각각 로드되는 속도 역시 데이터가 많아질수록 느려짐, `lazyloading`이나 `prefetch`를 통한 이미지 최적화 로직 등 추가하여 **사용자 경험 상승**
+3. 백엔드 서버는 S3와 EC2로 배포되는반면 프론트는 vercel로 배포함 , 나중에 route53을 통한 동일한 도메인으로 배포를 하여 위 트러블을 피해보자
+4. 여러 list들이 많은만큼 페이지네이션이나 인피니티스크롤의 사용이 필수가 됨
 
-======================================================================
+## 만약 되돌아간다면
 
-새로운 시도 - S3와 RDS를 통한 이미지 파일 업로드
+- 회의를 더욱 자주할것 -> 주기 적인 회의를 통해 서로의 진행상황과 목표치를 생각할 수 있음
 
-새롭게 알아낸 사실 1. 기존에 텍스트만 주고 받는 FORM DATA 형식과 다르다는 것을 알았다. > form-data : requestbody에 queryString방식과 동일한 형태로 데이터가 들어온다. > multipart/form-data : 파일 데이터가 들어올 수 있다.
-파일 데이터의 경우 MultiPartFile class로 file 정보를 받아야 한다.
-
-    2. S3를 이용하기 위해서는 별도의 의존성을 주입 받아야 한다.
-    	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-
-    3. client에게 이미지를 보여주기 위해서는 이미지 파일이 저장된 경로를 알려주어야 하기 때문에,
-    	RDS에는 해당 이미지에 대한 경로를 저장하는 방식으로 client와 소통을 한다.
-    	이미지 저장이 아닌, 단순히 브라우저에 이미지를 띄우기 위해서는 이미지를 저장할 때
-    	metadata의 속성 중, contentDisposition을 inline 값을 주어야 한다.
+**이상입니다 감사합니다**
