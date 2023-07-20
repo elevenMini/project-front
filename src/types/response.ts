@@ -13,7 +13,7 @@ type DateTime = [
 ];
 
 interface Board {
-  id: string;
+  id: number;
   title: string;
   username: string;
   createdAt: DateTime;
