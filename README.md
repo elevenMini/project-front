@@ -9,6 +9,7 @@
     - [Notion link](#notion-link)
     - [Member links](#member-links)
     - [Front](#front)
+    - [Back](#back)
 
 ## Frontend 이슈
 
@@ -104,6 +105,8 @@ https://nervous-nemophila-a41.notion.site/83aec441bb1140ddbe6825d032def902?pvs=4
 
 - **[git 주소](https://github.com/nonjk2)** <br>
 - **[blog](https://deveundol.com/)**
+
+### Back
 
 **홍승현**
 

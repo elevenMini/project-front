@@ -127,7 +127,15 @@ const Detail = () => {
                   <Button
                     color="custom"
                     size="small"
-                    title={<>완료</>}
+                    title={
+                      <>
+                        {updateLoading ? (
+                          <Spinner color="#000" spinColor="gray" size={15} borderSize={2} />
+                        ) : (
+                          "완료"
+                        )}
+                      </>
+                    }
                     onClick={updateButtonHandler}
                   />
                   <Button
