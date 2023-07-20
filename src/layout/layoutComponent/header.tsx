@@ -1,5 +1,5 @@
 import { menu, setting } from "@/assets/icon/icons";
-import { useAppDispatch } from "@/hooks/useRedux";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { userSet } from "@/store/slice/userSlice";
 import { HeaderContainer } from "@/style/layoutstyle/layout";
 import { Button } from "@/util";
@@ -12,11 +12,15 @@ export const Avatar = styled.div`
   width: 40px;
   height: 40px;
   border-radius: 100%;
-  background-color: gray;
+  background-color: #eee;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  p {
+    font-size: 20px;
+    font-weight: 600;
+  }
 `;
 
 interface HeaderProps {
@@ -27,6 +31,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   const { setSidebar } = props;
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user.id);
   return (
     <HeaderContainer>
       <div className="header-wrraper">
@@ -63,6 +68,8 @@ const Header: React.FC<HeaderProps> = (props) => {
               dispatch(userSet({ id: null, nickname: null, token: null }));
             }}
           >
+            <p>{user.split("@")[1].charAt(0)}</p>
+
             {/* <img src="" alt="asd" className="avatar" /> */}
           </Avatar>
         </div>

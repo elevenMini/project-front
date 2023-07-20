@@ -1,13 +1,13 @@
-import styled from "styled-components";
 import { Avatar } from "./header";
 import { Link, useLocation } from "react-router-dom";
 import { board, home, picture, trash } from "@/assets/icon/icons";
 import { Icon } from "@/util";
 import { SidebarContainer } from "@/style/layoutstyle/layout";
+import { useAppSelector } from "@/hooks/useRedux";
 
 const Sidebar = () => {
   const location = useLocation();
-
+  const user = useAppSelector((state) => state.user.id);
   const linkColor = (path: string) => {
     const pathStyle = location.pathname.includes(path)
       ? {
@@ -23,10 +23,11 @@ const Sidebar = () => {
       <div className="sticky">
         <div className="sidebar-wrraper">
           <div className="userSection">
-            <Avatar />
+            <Avatar>
+              <p>{user.split("@")[1].charAt(0)}</p>
+            </Avatar>
             <div>
-              <span>최은석</span>
-              <span>설명설명</span>
+              <span>{user}</span>
             </div>
           </div>
           <div className="linkSection">
