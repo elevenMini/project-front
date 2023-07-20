@@ -30,8 +30,12 @@ const Main = () => {
   return (
     <MainContainer>
       <Carousel images={WantedImg} />
-      <Previewlist title={"내 갤러리"} />
-      <Previewlist title={"전체 게시물"} />
+      {BoardTopfiveData && UserTopfiveData && (
+        <>
+          <Previewlist title={"내 갤러리"} list={UserTopfiveData} />
+          <Previewlist title={"전체 게시물"} list={BoardTopfiveData} />
+        </>
+      )}
     </MainContainer>
   );
 };

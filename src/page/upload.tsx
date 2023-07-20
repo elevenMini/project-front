@@ -17,9 +17,13 @@ const Upload = () => {
   const onUploadToServerButtonClick = useCallback(async () => {
     setLoading(true);
     if (!inputRef.current?.files?.[0]) {
-      return;
+      alert("이미지가없어요");
+      return setLoading(false);
     }
-
+    if (!title || !content) {
+      alert("빈칸을 채워주세요!");
+      return setLoading(false);
+    }
     const formData = new FormData();
     formData.append("image", inputRef.current.files[0]);
     formData.append("title", title);
@@ -42,7 +46,7 @@ const Upload = () => {
   }, [title, content]);
 
   return (
-    <UploadContainer>
+    <UploadContainer previewImage={!!previewImage}>
       <div className="uploaddiv">
         <div className="pictureContainer">
           <input type="file" ref={inputRef} onChange={onUploadImage} style={{ display: "none" }} />
@@ -79,11 +83,10 @@ const Upload = () => {
             InputSize="medium"
             placeholder="제목입력"
           />
-          <Input
+          <textarea
             color="black"
             value={content}
             onChange={onChangeContentValue}
-            InputSize="large"
             placeholder="설명을 입력해주세요"
           />
           <Button

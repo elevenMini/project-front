@@ -56,7 +56,7 @@ interface ApiResponse {
 }
 
 type DelMyBoard = ApiResponse;
-type MyBoardList = Board[];
+type MyBoardList = UsersBoard[];
 type UsersBoardList = UsersBoard[];
 type UserBoardDetails = Post;
 

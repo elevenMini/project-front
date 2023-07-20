@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { ThemeProps } from "../theme";
 
-interface BackgroundProps {
+interface BackgroundProps extends ThemeProps {
   background: string;
 }
 
