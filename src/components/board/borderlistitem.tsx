@@ -1,10 +1,15 @@
-import { Avatar } from "@/layout/layoutComponent/header";
-import { BoardItemContainer, ItemBox, ItemContainer, ItemWrraper } from "@/style/board/board";
+import {
+  Avatar,
+  BoardItemContainer,
+  ItemBox,
+  ItemContainer,
+  ItemWrraper,
+} from "@/style/board/board";
 import { DateTime, UsersBoard } from "@/types/response";
 import { useNavigate } from "react-router-dom";
 
 const BoardListItem: React.FC<UsersBoard> = (props) => {
-  const { uploadImage, title, username, createdAt } = props;
+  const { uploadImage, title, username, createdAt, id } = props;
   const navigate = useNavigate();
   const convertToJSDate = (dateTime: DateTime): Date => {
     const [year, month, day, hour, minute, second] = dateTime;
@@ -26,20 +31,24 @@ const BoardListItem: React.FC<UsersBoard> = (props) => {
     return `${seconds}초 전`;
   };
   const detailNavigateHandler = (Boardid: number) => {
-    navigate(`board/${Boardid}`);
+    navigate(`/board/${Boardid}`);
   };
-  const Mockcontent = (
+
+  const content = (
     <BoardItemContainer>
-      <ItemContainer>
+      <ItemContainer onClick={() => detailNavigateHandler(id)}>
         <ItemBox className="itemBox">
           <img src={uploadImage?.storeFileName} alt="이미지누락" className="board-img" />
         </ItemBox>
         <div className="ItemContent">
           <div className="content-warrper">
-            <Avatar />
+            <Avatar>{username.split("@")[1].charAt(0)}</Avatar>
             <div className="contents">
               <p className="title">{title}</p>
-              <p className="created">{createdAt ? getTimeAgo(createdAt) : ""}</p>
+              <div className="timename">
+                <p className="created">{username}</p>
+                <p className="created">{createdAt ? getTimeAgo(createdAt) : ""}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -47,7 +56,7 @@ const BoardListItem: React.FC<UsersBoard> = (props) => {
     </BoardItemContainer>
   );
 
-  const lastItem = <ItemWrraper>{Mockcontent}</ItemWrraper>;
+  const lastItem = <ItemWrraper>{content}</ItemWrraper>;
 
   return <>{lastItem}</>;
 };

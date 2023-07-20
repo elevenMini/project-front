@@ -71,7 +71,19 @@ const ItemMockBox = styled.div`
   /* box-shadow: 0 0 40px rgba(8, 7, 16, 0.1); */
   border-radius: 15px;
 `;
-
+const Avatar = styled.div`
+  max-width: 40px;
+  width: 40px;
+  height: 40px;
+  font-weight: 600;
+  border-radius: 100%;
+  font-size: 1.2rem;
+  background-color: #eee;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 const ItemWrraper = styled.div<ThemeProps>`
   width: 25%;
   @media ${(props) => props.theme.size.large} {
@@ -125,6 +137,10 @@ const ItemContainer = styled.div`
           font-size: 15px;
           font-weight: 500;
         }
+        .timename {
+          display: flex;
+          gap: 10px;
+        }
       }
     }
   }
@@ -163,4 +179,5 @@ export {
   ItemMockBox,
   ItemMockContainer,
   ItemMockWrraper,
+  Avatar,
 };
