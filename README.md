@@ -6,6 +6,9 @@
     - [트러블 슈팅 - 해결방안](#트러블-슈팅---해결방안)
   - [아쉬운점 \& 개선점](#아쉬운점--개선점)
   - [만약 되돌아간다면](#만약-되돌아간다면)
+    - [Notion link](#notion-link)
+    - [Member links](#member-links)
+    - [Front](#front)
 
 ## Frontend 이슈
 
@@ -87,3 +90,27 @@ JWT는 사용자 인증을 위해 사용하는 토큰입니다. 사용자가 로
 - 회의를 더욱 자주할것 -> 주기 적인 회의를 통해 서로의 진행상황과 목표치를 생각할 수 있음
 
 **이상입니다 감사합니다**
+
+### Notion link
+
+https://nervous-nemophila-a41.notion.site/83aec441bb1140ddbe6825d032def902?pvs=4
+<br>
+
+### Member links
+
+### Front
+
+**최은석**
+
+- **[git 주소](https://github.com/nonjk2)** <br>
+- **[blog](https://deveundol.com/)**
+
+**홍승현**
+
+- **[git 주소](https://github.com/hongsh429)** <br>
+- **[blog](https://hongs429-blog.tistory.com/)**
+
+**최순**
+
+- **[git 주소](https://github.com/soon91)** <br>
+- **[blog](https://soony91.tistory.com)**
